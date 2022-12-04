@@ -35,6 +35,9 @@
 #include "pokemon_storage_system.h"
 #include "constants/sound.h"
 
+const u8 gText_EV[] = _(" EV");
+const u8 gText_IV[] = _(" IV");
+
 // needs conflicting header to match (curIndex is s8 in the function, but has to be defined as u8 here)
 extern s16 SeekToNextMonInBox(struct BoxPokemon * boxMons, u8 curIndex, u8 maxIndex, u8 flags);
 
@@ -2176,6 +2179,7 @@ static void BufferIvOrEvStats(u8 mode) {
             statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV);
             ConvertIntToDecimalStringN(sMonSummaryScreen->summary.curHpStrBuf, statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
             sMonSummaryScreen->summary.curHpStrBuf;
+            StringAppend(sMonSummaryScreen->summary.curHpStrBuf, gText_IV);
 
             statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV);
             ConvertIntToDecimalStringN(sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
@@ -2201,6 +2205,7 @@ static void BufferIvOrEvStats(u8 mode) {
             statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_EV);
             ConvertIntToDecimalStringN(sMonSummaryScreen->summary.curHpStrBuf, statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
             sMonSummaryScreen->summary.curHpStrBuf;
+            StringAppend(sMonSummaryScreen->summary.curHpStrBuf, gText_EV);
 
             statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_EV);
             ConvertIntToDecimalStringN(sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
