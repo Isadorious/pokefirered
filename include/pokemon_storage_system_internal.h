@@ -443,7 +443,6 @@ struct PokemonStorageSystemData
 
 extern struct PokemonStorageSystemData *gStorage;
 
-void EnterPokeStorage(u8 boxOption);
 u8 GetCurrentBoxOption(void);
 struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
 void SetBoxWallpaper(u8 boxId, u8 wallpaperId);

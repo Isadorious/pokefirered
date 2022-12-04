@@ -39,6 +39,7 @@ enum
 };
 #define MAX_DEFAULT_WALLPAPER WALLPAPER_SAVANNA
 
+void EnterPokeStorage(u8 boxOption);
 u8 *GetBoxNamePtr(u8 boxNumber);
 struct BoxPokemon *GetBoxedMonPtr(u8 boxId, u8 monPosition);
 void SetBoxMonNickAt(u8 boxId, u8 monPosition, const u8 *newNick);
