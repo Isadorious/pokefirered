@@ -375,5 +375,11 @@ static const void *const sItemIconTable[ITEMS_COUNT + 1][2] =
     [ITEM_POWDER_JAR] = {gFile_graphics_items_icons_powder_jar_sheet, gFile_graphics_items_icon_palettes_powder_jar_palette},
     [ITEM_RUBY] = {gFile_graphics_items_icons_gem_sheet, gFile_graphics_items_icon_palettes_ruby_palette},
     [ITEM_SAPPHIRE] = {gFile_graphics_items_icons_gem_sheet, gFile_graphics_items_icon_palettes_sapphire_palette},
+    [ITEM_HP_DOWN] = {gFile_graphics_items_icons_hp_up_sheet, gFile_graphics_items_icon_palettes_hp_up_palette},
+    [ITEM_PROTEIN_DOWN] = {gFile_graphics_items_icons_vitamin_sheet, gFile_graphics_items_icon_palettes_protein_palette},
+    [ITEM_IRON_DOWN] = {gFile_graphics_items_icons_vitamin_sheet, gFile_graphics_items_icon_palettes_iron_palette},
+    [ITEM_CARBOS_DOWN] = {gFile_graphics_items_icons_vitamin_sheet, gFile_graphics_items_icon_palettes_carbos_palette},
+    [ITEM_CALCIUM_DOWN] = {gFile_graphics_items_icons_vitamin_sheet, gFile_graphics_items_icon_palettes_calcium_palette},
+    [ITEM_ZINC_DOWN] = {gFile_graphics_items_icons_vitamin_sheet, gFile_graphics_items_icon_palettes_zinc_palette},
     [ITEMS_COUNT] = {gFile_graphics_items_icons_return_to_field_arrow_sheet, gFile_graphics_items_icon_palettes_return_to_field_arrow_palette}
 };

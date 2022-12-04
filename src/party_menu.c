@@ -4422,6 +4422,13 @@ static bool8 IsItemFlute(u16 item)
     return FALSE;
 }
 
+static bool8 IsEvChanger(u16 item)
+{
+    if (item == ITEM_PROTEIN || item == ITEM_HP_UP || item == ITEM_IRON || item == ITEM_CALCIUM || item == ITEM_ZINC || item == ITEM_CARBOS || item == ITEM_PROTEIN_DOWN || item == ITEM_HP_DOWN || item == ITEM_IRON_DOWN || item == ITEM_CALCIUM_DOWN || item == ITEM_ZINC_DOWN || item == ITEM_CARBOS_DOWN )
+        return TRUE;
+    return FALSE;
+}
+
 static bool8 ExecuteTableBasedItemEffect_(u8 partyMonIndex, u16 item, u8 monMoveIndex)
 {
     if (gMain.inBattle)
@@ -4501,14 +4508,16 @@ void ItemUseCB_MedicineStep(u8 taskId, TaskFunc func)
     else
     {
         gPartyMenuUseExitCallback = TRUE;
-        if (!IsItemFlute(item))
+        if (!IsItemFlute(item) && !IsEvChanger(item))
         {
             PlaySE(SE_USE_ITEM);
             if (gPartyMenu.action != PARTY_ACTION_REUSABLE_ITEM)
-                RemoveBagItem(item, 1);
+            RemoveBagItem(item, 1);
         }
-        else
+        else if (IsItemFlute(item))
             PlaySE(SE_GLASS_FLUTE);
+        else
+            PlaySE(SE_EXP);
 
         SetPartyMonAilmentGfx(mon, &sPartyMenuBoxes[gPartyMenu.slotId]);
         if (gSprites[sPartyMenuBoxes[gPartyMenu.slotId].statusSpriteId].invisible)

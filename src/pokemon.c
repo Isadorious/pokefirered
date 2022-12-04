@@ -3952,6 +3952,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
     u16 heldItem;
     u8 val;
     u32 evDelta;
+    s8 evChange;
 
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
     if (heldItem == ITEM_ENIGMA_BERRY)
@@ -4137,18 +4138,35 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     {
                     case 0: // EV_HP
                     case 1: // EV_ATK
-                        evCount = GetMonEVCount(mon);
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                        evChange = itemEffect[idx];
+                        if(evChange > 0) { // Standard Vitamins add stats
+                            evCount = GetMonEVCount(mon);
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                                else
+                                    evDelta = itemEffect[idx];
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += 510 - (evCount + evDelta);
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i], &data);
+                                CalculateMonStats(mon);
+                                idx++;
+                                retVal = FALSE;
+                            }
+                        } else { // Custom vitamins remove stats
+                            evCount = GetMonEVCount(mon);
+                            if (evCount == 0)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
+                            if (data < 10)
+                                evDelta = -data;
                             else
                                 evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += 510 - (evCount + evDelta);
                             data += evDelta;
                             SetMonData(mon, sGetMonDataEVConstants[i], &data);
                             CalculateMonStats(mon);
@@ -4321,23 +4339,40 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 1: // EV_SPEED
                     case 2: // EV_SPDEF
                     case 3: // EV_SPATK
-                        evCount = GetMonEVCount(mon);
-                        if (evCount >= MAX_TOTAL_EVS)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
-                                evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                        evChange = itemEffect[idx];
+                        if(evChange > 0) { // Standard vitamins add stats
+                            evCount = GetMonEVCount(mon);
+                            if (evCount >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                if (data + itemEffect[idx] > EV_ITEM_RAISE_LIMIT)
+                                    evDelta = EV_ITEM_RAISE_LIMIT - (data + itemEffect[idx]) + itemEffect[idx];
+                                else
+                                    evDelta = itemEffect[idx];
+                                if (evCount + evDelta > MAX_TOTAL_EVS)
+                                    evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
+                                data += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
+                                CalculateMonStats(mon);
+                                retVal = FALSE;
+                                idx++;
+                            }
+                        } else { // Custom vitamins remove stats
+                            evCount = GetMonEVCount(mon);
+                            if (evCount == 0)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
+                            if (data < 10)
+                                evDelta = -data;
                             else
                                 evDelta = itemEffect[idx];
-                            if (evCount + evDelta > MAX_TOTAL_EVS)
-                                evDelta += MAX_TOTAL_EVS - (evCount + evDelta);
                             data += evDelta;
                             SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
                             CalculateMonStats(mon);
-                            retVal = FALSE;
                             idx++;
+                            retVal = FALSE;
                         }
                         break;
                     case 4: // PP_MAX
@@ -4473,6 +4508,7 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
     u16 heldItem;
     u8 curEffect;
     u32 curMoveId;
+    s8 evChange;
 
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
     // you have to write as such, because otherwise gMain.inBattle will lose its u8 cast
@@ -4600,13 +4636,25 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
                     {
                     case 0: // EV_HP
                     case 1: // EV_ATK
-                        if (GetMonEVCount(mon) >= MAX_TOTAL_EVS)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            idx++;
-                            retVal = FALSE;
+                        evChange = itemEffect[idx];
+                        if(evChange > 0) { // Standard vitamins add stats
+                            if (GetMonEVCount(mon) >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                idx++;
+                                retVal = FALSE;
+                            }
+                        } else { // Custom vitamins remove stats
+                            if (GetMonEVCount(mon) <= 0)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
+                            if (data > 0)
+                            {
+                                idx++;
+                                retVal = FALSE;
+                            }
                         }
                         break;
                     case 2: // HEAL_HP
@@ -4677,13 +4725,25 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
                     case 1: // EV_SPEED
                     case 2: // EV_SPDEF
                     case 3: // EV_SPATK
-                        if (GetMonEVCount(mon) >= MAX_TOTAL_EVS)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < EV_ITEM_RAISE_LIMIT)
-                        {
-                            retVal = FALSE;
-                            idx++;
+                        evChange = itemEffect[idx];
+                        if(evChange > 0 ) { // Standard vitamins add stats
+                            if (GetMonEVCount(mon) >= MAX_TOTAL_EVS)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
+                            if (data < EV_ITEM_RAISE_LIMIT)
+                            {
+                                retVal = FALSE;
+                                idx++;
+                            }
+                        } else { // Custom vitamins remove stats
+                            if (GetMonEVCount(mon) == 0)
+                                return TRUE;
+                            data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
+                            if (data > 0)
+                            {
+                                retVal = FALSE;
+                                idx++;
+                            }
                         }
                         break;
                     case 4: // PP_MAX

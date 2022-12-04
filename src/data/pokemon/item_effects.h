@@ -351,6 +351,56 @@ static const u8 sItemEffect_SitrusBerry[7] = {
     [6] = 30,
 };
 
+static const u8 sItemEffect_HPUp_Down[10] = {
+    [4] = ITEM4_EV_HP,
+    [5] = ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
+static const u8 sItemEffect_Protein_Down[10] = {
+    [4] = ITEM4_EV_ATK,
+    [5] = ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
+static const u8 sItemEffect_Iron_Down[10] = {
+    [5] = ITEM5_EV_DEF | ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
+static const u8 sItemEffect_Carbos_Down[10] = {
+    [5] = ITEM5_EV_SPEED | ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
+static const u8 sItemEffect_Calcium_Down[10] = {
+    [5] = ITEM5_EV_SPATK | ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
+static const u8 sItemEffect_Zinc_Down[10] = {
+    [5] = ITEM5_EV_SPDEF | ITEM5_FRIENDSHIP_ALL,
+    [6] = -10,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
 const u8 *const gItemEffectTable[] =
 {
     [ITEM_POTION - ITEM_POTION] = sItemEffect_Potion,
@@ -416,5 +466,11 @@ const u8 *const gItemEffectTable[] =
     [ITEM_PERSIM_BERRY - ITEM_POTION] = sItemEffect_PersimBerry,
     [ITEM_LUM_BERRY - ITEM_POTION] = sItemEffect_LumBerry,
     [ITEM_SITRUS_BERRY - ITEM_POTION] = sItemEffect_SitrusBerry,
+    [ITEM_HP_DOWN - ITEM_POTION] = sItemEffect_HPUp_Down,
+    [ITEM_PROTEIN_DOWN - ITEM_POTION] = sItemEffect_Protein_Down,
+    [ITEM_IRON_DOWN - ITEM_POTION] = sItemEffect_Iron_Down,
+    [ITEM_CARBOS_DOWN - ITEM_POTION] = sItemEffect_Carbos_Down,
+    [ITEM_CALCIUM_DOWN - ITEM_POTION] = sItemEffect_Calcium_Down,
+    [ITEM_ZINC_DOWN - ITEM_POTION] = sItemEffect_Zinc_Down,
     [LAST_BERRY_INDEX - ITEM_POTION] = NULL,
 };

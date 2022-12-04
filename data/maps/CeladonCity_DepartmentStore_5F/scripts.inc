@@ -56,6 +56,12 @@ CeladonCity_DepartmentStore_5F_Vitamins::
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_ZINC
 	.2byte ITEM_CARBOS
+	.2byte ITEM_HP_DOWN
+	.2byte ITEM_PROTEIN_DOWN
+	.2byte ITEM_IRON_DOWN
+	.2byte ITEM_CALCIUM_DOWN
+	.2byte ITEM_ZINC_DOWN
+	.2byte ITEM_CARBOS_DOWN
 	.2byte ITEM_NONE
 	release
 	end

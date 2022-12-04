@@ -438,7 +438,15 @@
 #define ITEM_RUBY 373
 #define ITEM_SAPPHIRE 374
 
-#define ITEMS_COUNT 375
+// Custom Vitamins
+#define ITEM_HP_DOWN 375
+#define ITEM_PROTEIN_DOWN 376
+#define ITEM_IRON_DOWN 377
+#define ITEM_CARBOS_DOWN 378
+#define ITEM_CALCIUM_DOWN 379
+#define ITEM_ZINC_DOWN 380
+
+#define ITEMS_COUNT 381
 
 #define FIRST_BERRY_INDEX ITEM_CHERI_BERRY
 #define LAST_BERRY_INDEX ITEM_ENIGMA_BERRY
@@ -454,6 +462,6 @@
 #define SUPER_ROD 2
 
 // Check if the item is one that can be used on a Pokemon.
-#define IS_POKEMON_ITEM(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
+#define IS_POKEMON_ITEM(item) (((item) >= ITEM_POTION && (item) <= ITEM_0B2) || ((item) >= ITEM_HP_DOWN && (item) <= ITEM_ZINC_DOWN))
 
 #endif  // GUARD_CONSTANTS_ITEMS_H
