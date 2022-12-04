@@ -5,7 +5,8 @@ My personal modifications to the Fire Red and Leaf Green decompilation project f
 - Vitamins can be used to the EV cap
 - EV Cap for invidiual stats changed to 252
 - Added new Vitamins to reduce EVs
-- Vitamins are now reusable key items and are avaliable from the department store for free
+- Vitamins now cost $1 from the department store
+- Rare Candies cost $1 and are avaliable from Viridian and the department store
 - Boosted shiny odds to 1/512 for fun
 - EVs & IVs are accessible via the stats page in the summary view. Keybindings: DPAD_UP for EVs, DPAD_DOWN for IVs, A for Stats.
 
