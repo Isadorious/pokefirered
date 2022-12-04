@@ -1,5 +1,14 @@
 # Pokémon FireRed and LeafGreen
 
+My personal modifications to the Fire Red and Leaf Green decompilation project for use in Nuzlockes.
+
+- Vitamins can be used to the EV cap
+- EV Cap for invidiual stats changed to 252
+- Added new Vitamins to reduce EVs
+- Vitamins are now reusable key items and are avaliable from the department store for free
+- Boosted shiny odds to 1/512 for fun
+- EVs & IVs are accessible via the stats page in the summary view. Keybindings: DPAD_UP for EVs, DPAD_DOWN for IVs, A for Stats.
+
 [![Build Status][travis-badge]][travis]
 
 [travis]: https://travis-ci.org/pret/pokefirered
